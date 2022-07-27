@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Advice generator app</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <small>Advice #<span class="advice-no">113</span></small>
+
+      <p>
+        "<span class="advice-text"
+          >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus
+          ratione dolorum sapiente! Cupiditate, dicta repellat.</span
+        >
+        "
+      </p>
+
+      <img
+        src="./images/pattern-divider-desktop.svg"
+        alt=""
+        class="desktop-pattern"
+      />
+      <img
+        src="./images/pattern-divider-mobile.svg"
+        alt=""
+        class="mobile-pattern"
+      />
+
+      <button class="dice-holder" role="button" aria-label="Fetch new advice">
+        <img src="./images/icon-dice.svg" alt="dice" class="btn" />
+      </button>
+    </div>
+
+    <script>
+      function fetchAdvice() {
+        fetch("https://api.adviceslip.com/advice")
+          .then((response) => response.json())
+          .then(({ slip }) => {
+            const adviceNumber = document.querySelector(".advice-no");
+            const advice = document.querySelector(".advice-text");
+
+            adviceNumber.textContent = slip.id;
+            advice.textContent = slip.advice;
+          });
+      }
+
+      // run fxn when page loads
+      fetchAdvice();
+
+      const dice = document.querySelector(".dice-holder");
+      dice.addEventListener("click", fetchAdvice);
+    </script>
+  </body>
+</html>
